@@ -9,16 +9,6 @@
     tools:context=".MainActivity" >
 
     <EditText
-        android:id="@+id/manualEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="186dp"
-        android:ems="10"
-        android:inputType="textMultiLine" />
-
-    <EditText
         android:id="@+id/response"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,5 +30,24 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:src="@android:drawable/ic_btn_speak_now" />
+
+    <EditText
+        android:id="@+id/manualEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="Manual texting"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/manualButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/response"
+        android:layout_alignParentRight="true"
+        android:text="Go" />
 
 </RelativeLayout>
