@@ -3,8 +3,6 @@ package com.asilane;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.asilane.core.Language;
-
 public class Controller implements OnClickListener {
 	private final MainActivity activity;
 
@@ -21,7 +19,8 @@ public class Controller implements OnClickListener {
 		// activity.getAsilane().beginRecord();
 		// }
 
-		activity.getText().setText(
-				activity.getFacade().handleSentence(activity.getEditText().getText().toString(), Language.french));
+		activity.getResponseField().setText(
+				activity.getFacade().handleSentence(activity.getManualEditText().getText().toString(),
+						java.util.Locale.FRANCE));
 	}
 }

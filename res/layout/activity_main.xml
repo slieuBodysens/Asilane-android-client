@@ -8,35 +8,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/button1"
+    <EditText
+        android:id="@+id/manualEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="138dp"
-        android:text="Listen" />
+        android:layout_marginTop="186dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/response"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/manualEditText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="26dp"
         android:ems="10"
         android:inputType="textMultiLine" >
 
         <requestFocus />
     </EditText>
 
-    <TextView
-        android:id="@+id/textView1"
+    <ImageButton
+        android:id="@+id/speakButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="60dp"
-        android:text="TextView" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@android:drawable/ic_btn_speak_now" />
 
 </RelativeLayout>
