@@ -1,7 +1,9 @@
-package com.asilane;
+package com.asilane.android;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -18,13 +20,43 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.asilane.R;
+import com.asilane.android.service.SaveWhatSayingService;
+import com.asilane.android.service.WebBrowserService;
 import com.asilane.core.facade.Facade;
+import com.asilane.core.facade.ServiceDispatcher;
+import com.asilane.service.AsilaneDialogService;
+import com.asilane.service.AsilaneIdentityService;
+import com.asilane.service.CinemaService;
+import com.asilane.service.DateService;
+import com.asilane.service.FindPlaceService;
+import com.asilane.service.FortyTwoService;
+import com.asilane.service.HelloService;
+import com.asilane.service.IPService;
+import com.asilane.service.IService;
+import com.asilane.service.MailService;
+import com.asilane.service.MediaPlayerService;
+import com.asilane.service.RepeatService;
+import com.asilane.service.WeatherForecastService;
+import com.asilane.service.WikipediaService;
+import com.asilane.service.YouTubeService;
 
 public class MainActivity extends Activity {
 	private Facade facade;
 	private TextToSpeech tts;
+	private final Locale lang = Locale.FRANCE;
+	private static Activity INSTANCE;
 
 	protected static final int RESULT_SPEECH = 1;
+
+	/**
+	 * Get Activity Instance
+	 * 
+	 * @return Activity Instance
+	 */
+	public static Activity getInstance() {
+		return INSTANCE;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -36,8 +68,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		// Initialize INSTANCE, facade, text to speech and load services in the dispatcher
+		INSTANCE = this;
 		facade = new Facade();
 		tts = new TextToSpeech(this, null);
+		ServiceDispatcher.getInstance(lang).setServices(getAllServices());
 
 		// Set non editable text field
 		((EditText) findViewById(R.id.response)).setKeyListener(null);
@@ -46,7 +81,7 @@ public class MainActivity extends Activity {
 		((Button) findViewById(R.id.manualButton)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				final String response = facade.handleSentence(getManualEditText().getText().toString(), Locale.FRANCE);
+				final String response = facade.handleSentence(getManualEditText().getText().toString(), lang);
 				getResponseField().setText(response);
 				textToSpeech(response);
 			}
@@ -128,6 +163,36 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	/**
+	 * Get all services<br>
+	 * This is a custom method to choose which services will be implemented in the Android version
+	 * 
+	 * @return All services
+	 */
+	public Set<IService> getAllServices() {
+		// Using a LinkedHashSet to conserv the order of services
+		final Set<IService> allServices = new LinkedHashSet<IService>();
+
+		allServices.add(new SaveWhatSayingService());
+		allServices.add(new YouTubeService());
+		allServices.add(new HelloService());
+		allServices.add(new AsilaneIdentityService());
+		allServices.add(new FortyTwoService());
+		allServices.add(new WeatherForecastService());
+		allServices.add(new WebBrowserService());
+		allServices.add(new MediaPlayerService());
+		allServices.add(new AsilaneDialogService());
+		allServices.add(new DateService());
+		allServices.add(new IPService());
+		allServices.add(new WikipediaService());
+		allServices.add(new FindPlaceService());
+		allServices.add(new MailService());
+		allServices.add(new CinemaService());
+		allServices.add(new RepeatService());
+
+		return allServices;
 	}
 
 	/**
