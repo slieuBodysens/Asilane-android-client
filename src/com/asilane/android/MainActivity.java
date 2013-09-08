@@ -25,6 +25,7 @@ import com.asilane.android.service.FindPlaceService;
 import com.asilane.android.service.MailService;
 import com.asilane.android.service.SaveWhatSayingService;
 import com.asilane.android.service.WebBrowserService;
+import com.asilane.android.service.YouTubeService;
 import com.asilane.core.facade.Facade;
 import com.asilane.core.facade.ServiceDispatcher;
 import com.asilane.service.AsilaneDialogService;
@@ -39,7 +40,6 @@ import com.asilane.service.MediaPlayerService;
 import com.asilane.service.RepeatService;
 import com.asilane.service.WeatherForecastService;
 import com.asilane.service.WikipediaService;
-import com.asilane.service.YouTubeService;
 
 public class MainActivity extends Activity {
 	private Facade facade;
