@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asilane.R;
+import com.asilane.android.service.FindPlaceService;
+import com.asilane.android.service.MailService;
 import com.asilane.android.service.SaveWhatSayingService;
 import com.asilane.android.service.WebBrowserService;
 import com.asilane.core.facade.Facade;
@@ -29,12 +31,10 @@ import com.asilane.service.AsilaneDialogService;
 import com.asilane.service.AsilaneIdentityService;
 import com.asilane.service.CinemaService;
 import com.asilane.service.DateService;
-import com.asilane.service.FindPlaceService;
 import com.asilane.service.FortyTwoService;
 import com.asilane.service.HelloService;
 import com.asilane.service.IPService;
 import com.asilane.service.IService;
-import com.asilane.service.MailService;
 import com.asilane.service.MediaPlayerService;
 import com.asilane.service.RepeatService;
 import com.asilane.service.WeatherForecastService;
@@ -177,7 +177,6 @@ public class MainActivity extends Activity {
 
 		allServices.add(new SaveWhatSayingService());
 		allServices.add(new YouTubeService());
-		allServices.add(new HelloService());
 		allServices.add(new AsilaneIdentityService());
 		allServices.add(new FortyTwoService());
 		allServices.add(new WeatherForecastService());
@@ -191,6 +190,7 @@ public class MainActivity extends Activity {
 		allServices.add(new MailService());
 		allServices.add(new CinemaService());
 		allServices.add(new RepeatService());
+		allServices.add(new HelloService());
 
 		return allServices;
 	}
