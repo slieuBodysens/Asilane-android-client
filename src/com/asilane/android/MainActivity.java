@@ -21,8 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asilane.R;
+import com.asilane.android.service.CalendarService;
+import com.asilane.android.service.CallService;
 import com.asilane.android.service.FindPlaceService;
 import com.asilane.android.service.MailService;
+import com.asilane.android.service.SMSService;
 import com.asilane.android.service.SaveWhatSayingService;
 import com.asilane.android.service.WebBrowserService;
 import com.asilane.android.service.YouTubeService;
@@ -99,9 +102,7 @@ public class MainActivity extends Activity {
 				}
 
 				final Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-
-				intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
-
+				intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, lang);
 				try {
 					startActivityForResult(intent, RESULT_SPEECH);
 				} catch (final ActivityNotFoundException a) {
@@ -191,6 +192,9 @@ public class MainActivity extends Activity {
 		allServices.add(new CinemaService());
 		allServices.add(new RepeatService());
 		allServices.add(new HelloService());
+		allServices.add(new CallService());
+		allServices.add(new SMSService());
+		allServices.add(new CalendarService());
 
 		return allServices;
 	}

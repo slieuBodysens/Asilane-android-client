@@ -5,14 +5,18 @@
     android:versionName="1.0" >
     
 <uses-sdk android:minSdkVersion="4" />
+
+<!-- Permissions -->
 <uses-permission android:name="android.permission.INTERNET" /> 
+<uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+<!-- /Permissions -->
 
         android:minSdkVersion="8"
         android:targetSdkVersion="14" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/asilane"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
