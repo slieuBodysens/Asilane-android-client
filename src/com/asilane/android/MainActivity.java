@@ -1,9 +1,8 @@
 package com.asilane.android;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -33,13 +32,11 @@ import com.asilane.core.facade.Facade;
 import com.asilane.core.facade.ServiceDispatcher;
 import com.asilane.service.AsilaneDialogService;
 import com.asilane.service.AsilaneIdentityService;
-import com.asilane.service.CinemaService;
 import com.asilane.service.DateService;
 import com.asilane.service.FortyTwoService;
 import com.asilane.service.HelloService;
 import com.asilane.service.IPService;
 import com.asilane.service.IService;
-import com.asilane.service.MediaPlayerService;
 import com.asilane.service.RepeatService;
 import com.asilane.service.WeatherForecastService;
 import com.asilane.service.WikipediaService;
@@ -172,9 +169,9 @@ public class MainActivity extends Activity {
 	 * 
 	 * @return All services
 	 */
-	public Set<IService> getAllServices() {
+	public List<IService> getAllServices() {
 		// Using a LinkedHashSet to conserv the order of services
-		final Set<IService> allServices = new LinkedHashSet<IService>();
+		final List<IService> allServices = new ArrayList<IService>();
 
 		allServices.add(new SaveWhatSayingService());
 		allServices.add(new YouTubeService());
@@ -182,14 +179,12 @@ public class MainActivity extends Activity {
 		allServices.add(new FortyTwoService());
 		allServices.add(new WeatherForecastService());
 		allServices.add(new WebBrowserService());
-		allServices.add(new MediaPlayerService());
 		allServices.add(new AsilaneDialogService());
 		allServices.add(new DateService());
 		allServices.add(new IPService());
 		allServices.add(new WikipediaService());
 		allServices.add(new FindPlaceService());
 		allServices.add(new MailService());
-		allServices.add(new CinemaService());
 		allServices.add(new RepeatService());
 		allServices.add(new HelloService());
 		allServices.add(new CallService());

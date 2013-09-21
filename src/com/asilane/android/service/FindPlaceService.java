@@ -58,6 +58,13 @@ public class FindPlaceService implements IService {
 		return "Please specify a place.";
 	}
 
+	/**
+	 * Handle place search
+	 * 
+	 * @param place
+	 * @param lang
+	 * @return place location
+	 */
 	private String handleSearch(final String place, final Locale lang) {
 		final Intent browserIntent = new Intent(Intent.ACTION_VIEW);
 		browserIntent.setData(Uri.parse("https://maps.google.com/maps?q=" + place + "&hl="

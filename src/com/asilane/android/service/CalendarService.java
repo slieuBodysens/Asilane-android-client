@@ -24,7 +24,7 @@ import com.asilane.service.IService;
 public class CalendarService implements IService {
 
 	private static final String REVEILLE_MOI = "réveil.*moi (demain|aujourd'hui) à .*h.*";
-	private static final String SEND_A_SMS = "send a (sms|message)";
+	private static final String RDV = "rendez.*vous (demain|aujourd'hui) à .*h.*";
 
 	/*
 	 * (non-Javadoc)
@@ -47,6 +47,13 @@ public class CalendarService implements IService {
 
 					return "Très bien je vous réveille " + regexVars.get(1) + " à " + regexVars.get(2) + "h"
 							+ regexVars.get(3);
+				} else if ((regexVars = AsilaneUtils.extractRegexVars(RDV, sentence)) != null) {
+					cal.set(GregorianCalendar.HOUR_OF_DAY, Integer.parseInt(regexVars.get(2)));
+					cal.set(GregorianCalendar.MINUTE, Integer.parseInt(regexVars.get(3)));
+					addCalendarEvent("Rendez-vous", cal.getTime(), null, regexVars.get(1).equals("demain"));
+
+					return "Très bien je vous avertirai " + regexVars.get(1) + " à " + regexVars.get(2) + "h"
+							+ regexVars.get(3);
 				}
 			}
 
@@ -60,6 +67,14 @@ public class CalendarService implements IService {
 		}
 	}
 
+	/**
+	 * Add an event in the Android's calendar
+	 * 
+	 * @param title
+	 * @param beginDate
+	 * @param endDate
+	 * @param tomorrow
+	 */
 	private void addCalendarEvent(final String title, final Date beginDate, Date endDate, final boolean tomorrow) {
 		// If the event is tomorrow, we add 12 hours
 		final long tomorrowValue = (tomorrow) ? 43200000 : 0;
@@ -93,7 +108,6 @@ public class CalendarService implements IService {
 		if (lang == Locale.FRANCE) {
 			set.add(REVEILLE_MOI);
 		} else {
-			set.add(SEND_A_SMS);
 		}
 
 		return set;
@@ -102,7 +116,7 @@ public class CalendarService implements IService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.asilane.service.IService#handleRecoveryService(java.lang.String, com.asilane.core.Locale)
+	 * @see com.asilane.service.IService#handleRecoveryService(java.lang.String, java.util.Locale)
 	 */
 	@Override
 	public String handleRecoveryService(final String sentence, final Locale lang) {

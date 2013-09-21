@@ -59,16 +59,16 @@ public class MailService implements IService {
 
 		// ENGLISH
 
-		// With dest
-		if ((regexVars = AsilaneUtils.extractRegexVars(SEND_A_MAIL_TO, sentence)) != null) {
-			final String dest = textToEmailAddress(regexVars.get(1), lang);
-			mail(dest, "", "");
-			return "Ok, i send a mail to " + dest;
-		}
 		// With dest and message
-		else if ((regexVars = AsilaneUtils.extractRegexVars(SEND_A_MAIL_TO_AND_SAY, sentence)) != null) {
+		if ((regexVars = AsilaneUtils.extractRegexVars(SEND_A_MAIL_TO_AND_SAY, sentence)) != null) {
 			final String dest = textToEmailAddress(regexVars.get(1), lang);
 			mail(dest, "", regexVars.get(2));
+			return "Ok, i send a mail to " + dest;
+		}
+		// With dest
+		else if ((regexVars = AsilaneUtils.extractRegexVars(SEND_A_MAIL_TO, sentence)) != null) {
+			final String dest = textToEmailAddress(regexVars.get(1), lang);
+			mail(dest, "", "");
 			return "Ok, i send a mail to " + dest;
 		}
 
