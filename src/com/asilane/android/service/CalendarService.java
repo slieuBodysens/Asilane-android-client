@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
@@ -78,6 +79,7 @@ public class CalendarService implements IService {
 	 * @param endDate
 	 * @param tomorrow
 	 */
+	@SuppressLint("InlinedApi")
 	private void addCalendarEvent(final String title, final Date beginDate, Date endDate, final boolean tomorrow) {
 		// If the event is tomorrow, we add 12 hours
 		final long tomorrowValue = (tomorrow) ? 43200000 : 0;
