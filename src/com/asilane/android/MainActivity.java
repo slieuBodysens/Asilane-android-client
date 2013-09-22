@@ -29,6 +29,7 @@ import com.asilane.android.service.SaveWhatSayingService;
 import com.asilane.android.service.WebBrowserService;
 import com.asilane.android.service.YouTubeService;
 import com.asilane.core.facade.Facade;
+import com.asilane.core.facade.NoServiceFoundException;
 import com.asilane.core.facade.ServiceDispatcher;
 import com.asilane.service.AsilaneDialogService;
 import com.asilane.service.AsilaneIdentityService;
@@ -37,6 +38,7 @@ import com.asilane.service.FortyTwoService;
 import com.asilane.service.HelloService;
 import com.asilane.service.IPService;
 import com.asilane.service.IService;
+import com.asilane.service.InsultService;
 import com.asilane.service.RepeatService;
 import com.asilane.service.WeatherForecastService;
 import com.asilane.service.WikipediaService;
@@ -81,13 +83,33 @@ public class MainActivity extends Activity {
 		((Button) findViewById(R.id.manualButton)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				final String response = facade.handleSentence(getManualEditText().getText().toString(), lang);
-				getResponseField().setText(response);
-				textToSpeech(response);
+
+				try {
+					final String response = facade.handleSentence(getManualEditText().getText().toString(), lang);
+					getResponseField().setText(response);
+					tts = new TextToSpeech(MainActivity.getInstance(), new OnInitListener() {
+						@Override
+						public void onInit(final int status) {
+							textToSpeech(response);
+							;
+						}
+					});
+				} catch (final NoServiceFoundException e) {
+					final String response = e.getMessage();
+					getResponseField().setText(response + "\n\"" + getManualEditText().getText() + "\"");
+					tts = new TextToSpeech(MainActivity.getInstance(), new OnInitListener() {
+						@Override
+						public void onInit(final int status) {
+							textToSpeech(response);
+							;
+						}
+					});
+				}
+
 			}
 		});
 
-		// Adding a istener to the speak recognition button
+		// Adding a listener to the speak recognition button
 		final ImageButton speakButton = (ImageButton) findViewById(R.id.speakButton);
 		speakButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -119,14 +141,12 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if (data != null) {
+			final ArrayList<String> textSpeeched = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-		switch (requestCode) {
-
-		case RESULT_SPEECH: {
-			if (resultCode == RESULT_OK && null != data) {
-				final ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-				final String response = getFacade().handleSentence(text.get(0), Locale.FRANCE);
+			try {
+				// Speech the response
+				final String response = getFacade().handleSentence(textSpeeched.get(0), Locale.FRANCE);
 				getResponseField().setText(response);
 				tts = new TextToSpeech(this, new OnInitListener() {
 					@Override
@@ -135,9 +155,19 @@ public class MainActivity extends Activity {
 						;
 					}
 				});
+			} catch (final NoServiceFoundException e) {
+				// If nothing understood -> display the original request
+				getResponseField().setText(e.getMessage() + "\n\"" + textSpeeched.get(0) + "\"");
+
+				// Speech the error message
+				tts = new TextToSpeech(this, new OnInitListener() {
+					@Override
+					public void onInit(final int status) {
+						textToSpeech(e.getMessage());
+						;
+					}
+				});
 			}
-		}
-			break;
 		}
 	}
 
@@ -170,7 +200,6 @@ public class MainActivity extends Activity {
 	 * @return All services
 	 */
 	public List<IService> getAllServices() {
-		// Using a LinkedHashSet to conserv the order of services
 		final List<IService> allServices = new ArrayList<IService>();
 
 		allServices.add(new SaveWhatSayingService());
@@ -190,6 +219,7 @@ public class MainActivity extends Activity {
 		allServices.add(new CallService());
 		allServices.add(new SMSService());
 		allServices.add(new CalendarService());
+		allServices.add(new InsultService());
 
 		return allServices;
 	}

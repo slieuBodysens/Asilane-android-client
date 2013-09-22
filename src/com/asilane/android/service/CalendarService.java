@@ -24,7 +24,7 @@ import com.asilane.service.IService;
 public class CalendarService implements IService {
 
 	private static final String REVEILLE_MOI = "réveil.*moi (demain|aujourd'hui) à .*h.*";
-	private static final String RDV = "rendez.*vous (demain|aujourd'hui) à .*h.*";
+	private static final String RDV = ".*rendez.*vous (demain|aujourd'hui) à .*h.*";
 
 	/*
 	 * (non-Javadoc)
@@ -48,12 +48,12 @@ public class CalendarService implements IService {
 					return "Très bien je vous réveille " + regexVars.get(1) + " à " + regexVars.get(2) + "h"
 							+ regexVars.get(3);
 				} else if ((regexVars = AsilaneUtils.extractRegexVars(RDV, sentence)) != null) {
-					cal.set(GregorianCalendar.HOUR_OF_DAY, Integer.parseInt(regexVars.get(2)));
-					cal.set(GregorianCalendar.MINUTE, Integer.parseInt(regexVars.get(3)));
+					cal.set(GregorianCalendar.HOUR_OF_DAY, Integer.parseInt(regexVars.get(3)));
+					cal.set(GregorianCalendar.MINUTE, Integer.parseInt(regexVars.get(4)));
 					addCalendarEvent("Rendez-vous", cal.getTime(), null, regexVars.get(1).equals("demain"));
 
-					return "Très bien je vous avertirai " + regexVars.get(1) + " à " + regexVars.get(2) + "h"
-							+ regexVars.get(3);
+					return "Très bien je vous avertirai " + regexVars.get(2) + " à " + regexVars.get(3) + "h"
+							+ regexVars.get(4);
 				}
 			}
 
@@ -63,7 +63,10 @@ public class CalendarService implements IService {
 			return "";
 
 		} catch (final NumberFormatException e) {
-			return "date parsing fail";
+			if (lang == Locale.FRANCE) {
+				return "Je n'ai pas bien compris à quel heure vous souhaitez prévoir un évènement.";
+			}
+			return "I don't understand verywell the hour of the event.";
 		}
 	}
 
@@ -107,6 +110,7 @@ public class CalendarService implements IService {
 
 		if (lang == Locale.FRANCE) {
 			set.add(REVEILLE_MOI);
+			set.add(RDV);
 		} else {
 		}
 
@@ -119,7 +123,7 @@ public class CalendarService implements IService {
 	 * @see com.asilane.service.IService#handleRecoveryService(java.lang.String, java.util.Locale)
 	 */
 	@Override
-	public String handleRecoveryService(final String sentence, final Locale lang) {
+	public String handleRecoveryService(final String sentence, final Locale lang, final HistoryTree historyTree) {
 		return null;
 	}
 }
