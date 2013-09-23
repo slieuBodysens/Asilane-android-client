@@ -18,6 +18,8 @@ import com.asilane.service.IService;
  */
 public class MailService implements IService {
 
+	private final Set<String> commands = new HashSet<String>();
+
 	private static final String ENVOI_UN_MAIL = "envoi.* un .*mail";
 	private static final String SEND_A_MAIL = "send a .*mail";
 
@@ -115,19 +117,19 @@ public class MailService implements IService {
 	 */
 	@Override
 	public Set<String> getCommands(final Locale lang) {
-		final Set<String> set = new HashSet<String>();
-
-		if (lang == Locale.FRANCE) {
-			set.add(ENVOI_UN_MAIL);
-			set.add(ENVOI_UN_MAIL_A);
-			set.add(ENVOI_UN_MAIL_A_EN_DISANT);
-		} else {
-			set.add(SEND_A_MAIL);
-			set.add(SEND_A_MAIL_TO);
-			set.add(SEND_A_MAIL_TO_AND_SAY);
+		if (commands.isEmpty()) {
+			if (lang == Locale.FRANCE) {
+				commands.add(ENVOI_UN_MAIL);
+				commands.add(ENVOI_UN_MAIL_A);
+				commands.add(ENVOI_UN_MAIL_A_EN_DISANT);
+			} else {
+				commands.add(SEND_A_MAIL);
+				commands.add(SEND_A_MAIL_TO);
+				commands.add(SEND_A_MAIL_TO_AND_SAY);
+			}
 		}
 
-		return set;
+		return commands;
 	}
 
 	/*

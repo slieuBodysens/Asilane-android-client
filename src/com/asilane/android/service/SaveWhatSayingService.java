@@ -15,6 +15,8 @@ import com.asilane.service.IService;
  */
 public class SaveWhatSayingService implements IService {
 
+	private final Set<String> commands = new HashSet<String>();
+
 	private static final String ENREGISTRE_CE_QUE_JE_DIS = ".*registr. ce que je dis.*";
 	private static final String SAVE_WHAT_I_SAY = ".*save what i say.*";
 
@@ -44,15 +46,15 @@ public class SaveWhatSayingService implements IService {
 	 */
 	@Override
 	public Set<String> getCommands(final Locale lang) {
-		final Set<String> set = new HashSet<String>();
-
-		if (lang == Locale.FRANCE) {
-			set.add(ENREGISTRE_CE_QUE_JE_DIS);
-		} else {
-			set.add(SAVE_WHAT_I_SAY);
+		if (commands.isEmpty()) {
+			if (lang == Locale.FRANCE) {
+				commands.add(ENREGISTRE_CE_QUE_JE_DIS);
+			} else {
+				commands.add(SAVE_WHAT_I_SAY);
+			}
 		}
 
-		return set;
+		return commands;
 	}
 
 	/*

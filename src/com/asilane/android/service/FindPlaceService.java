@@ -19,6 +19,8 @@ import com.asilane.service.IService;
  */
 public class FindPlaceService implements IService {
 
+	private final Set<String> commands = new HashSet<String>();
+
 	private static final String OU_SE_TROUVE = "o. se trouve .*";
 	private static final String OU_SE_SITUE = "o. se situe .*";
 	private static final String ITINERAIRE = ".*itinéraire de .* à .*";
@@ -88,18 +90,18 @@ public class FindPlaceService implements IService {
 	 */
 	@Override
 	public Set<String> getCommands(final Locale lang) {
-		final Set<String> set = new HashSet<String>();
-
-		if (lang == Locale.FRANCE) {
-			set.add(OU_SE_TROUVE);
-			set.add(OU_SE_SITUE);
-			set.add(ITINERAIRE);
-			set.add(ITINERAIRE_ENTRE);
-		} else {
-			set.add(WHERE_IS);
+		if (commands.isEmpty()) {
+			if (lang == Locale.FRANCE) {
+				commands.add(OU_SE_TROUVE);
+				commands.add(OU_SE_SITUE);
+				commands.add(ITINERAIRE);
+				commands.add(ITINERAIRE_ENTRE);
+			} else {
+				commands.add(WHERE_IS);
+			}
 		}
 
-		return set;
+		return commands;
 	}
 
 	/*

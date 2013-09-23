@@ -24,6 +24,8 @@ import com.asilane.service.IService;
  */
 public class CalendarService implements IService {
 
+	private final Set<String> commands = new HashSet<String>();
+
 	private static final String REVEILLE_MOI = "réveil.*moi (demain|aujourd'hui) à .*h.*";
 	private static final String RDV = ".*rendez.*vous (demain|aujourd'hui) à .*h.*";
 
@@ -108,15 +110,15 @@ public class CalendarService implements IService {
 	 */
 	@Override
 	public Set<String> getCommands(final Locale lang) {
-		final Set<String> set = new HashSet<String>();
-
-		if (lang == Locale.FRANCE) {
-			set.add(REVEILLE_MOI);
-			set.add(RDV);
-		} else {
+		if (commands.isEmpty()) {
+			if (lang == Locale.FRANCE) {
+				commands.add(REVEILLE_MOI);
+				commands.add(RDV);
+			} else {
+			}
 		}
 
-		return set;
+		return commands;
 	}
 
 	/*

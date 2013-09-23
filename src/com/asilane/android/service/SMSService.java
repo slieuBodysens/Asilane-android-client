@@ -19,6 +19,8 @@ import com.asilane.service.IService;
  */
 public class SMSService implements IService {
 
+	private final Set<String> commands = new HashSet<String>();
+
 	private static final String ENVOI_UN_SMS = "envoi.* un (sms|message)";
 	private static final String SEND_A_SMS = "send a (sms|message)";
 
@@ -95,19 +97,19 @@ public class SMSService implements IService {
 	 */
 	@Override
 	public Set<String> getCommands(final Locale lang) {
-		final Set<String> set = new HashSet<String>();
-
-		if (lang == Locale.FRANCE) {
-			set.add(ENVOI_UN_SMS);
-			set.add(ENVOI_UN_SMS_A);
-			set.add(ENVOI_UN_SMS_A_EN_DISANT);
-		} else {
-			set.add(SEND_A_SMS);
-			set.add(SEND_A_SMS_TO);
-			set.add(SEND_A_SMS_TO_AND_SAY);
+		if (commands.isEmpty()) {
+			if (lang == Locale.FRANCE) {
+				commands.add(ENVOI_UN_SMS);
+				commands.add(ENVOI_UN_SMS_A);
+				commands.add(ENVOI_UN_SMS_A_EN_DISANT);
+			} else {
+				commands.add(SEND_A_SMS);
+				commands.add(SEND_A_SMS_TO);
+				commands.add(SEND_A_SMS_TO_AND_SAY);
+			}
 		}
 
-		return set;
+		return commands;
 	}
 
 	/*

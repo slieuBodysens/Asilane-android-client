@@ -19,6 +19,8 @@ import com.asilane.service.IService;
  */
 public class CallService implements IService {
 
+	private final Set<String> commands = new HashSet<String>();
+
 	private static final String APPELLE_LE = "appelle le .*";
 	private static final String CALL_THE = "call the .*";
 
@@ -58,15 +60,14 @@ public class CallService implements IService {
 	 */
 	@Override
 	public Set<String> getCommands(final Locale lang) {
-		final Set<String> set = new HashSet<String>();
-
-		if (lang == Locale.FRANCE) {
-			set.add(APPELLE_LE);
-		} else {
-			set.add(CALL_THE);
+		if (commands.isEmpty()) {
+			if (lang == Locale.FRANCE) {
+				commands.add(APPELLE_LE);
+			} else {
+				commands.add(CALL_THE);
+			}
 		}
-
-		return set;
+		return commands;
 	}
 
 	/*
