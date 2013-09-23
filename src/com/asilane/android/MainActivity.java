@@ -205,21 +205,21 @@ public class MainActivity extends Activity {
 		allServices.add(new SaveWhatSayingService());
 		allServices.add(new RepeatService());
 		allServices.add(new FortyTwoService());
-		allServices.add(new WikipediaService());
 		allServices.add(new YouTubeService());
 		allServices.add(new AsilaneIdentityService());
 		allServices.add(new WeatherForecastService());
 		allServices.add(new WebBrowserService());
-		allServices.add(new AsilaneDialogService());
 		allServices.add(new DateService());
 		allServices.add(new IPService());
 		allServices.add(new FindPlaceService());
 		allServices.add(new MailService());
-		allServices.add(new HelloService());
 		allServices.add(new CallService());
 		allServices.add(new SMSService());
 		allServices.add(new CalendarService());
+		allServices.add(new WikipediaService());
+		allServices.add(new AsilaneDialogService());
 		allServices.add(new InsultService());
+		allServices.add(new HelloService());
 
 		return allServices;
 	}
