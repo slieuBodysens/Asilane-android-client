@@ -146,7 +146,7 @@ public class MainActivity extends Activity {
 
 			try {
 				// Speech the response
-				final String response = getFacade().handleSentence(textSpeeched.get(0), Locale.FRANCE);
+				final String response = getFacade().handleSentence(textSpeeched.get(0), lang);
 				getResponseField().setText(response);
 				tts = new TextToSpeech(this, new OnInitListener() {
 					@Override
@@ -177,7 +177,7 @@ public class MainActivity extends Activity {
 	 * @param textToSpeech
 	 */
 	private void textToSpeech(final String textToSpeech) {
-		tts.setLanguage(Locale.FRANCE);
+		tts.setLanguage(lang);
 		tts.speak(textToSpeech, TextToSpeech.QUEUE_FLUSH, null);
 	}
 

@@ -23,7 +23,7 @@ Demandez-lui ce que vous voulez, voici quelques exemples :
 
 Si vous installez Asilane sur Android, vous pourrez également faire tout ça :
 - Appelle le 06 11 13 17 42
-- Envoi un sms à Édouard en disant "Quel est le sens de la vie ?"
+- Envoi un sms à Édouard "Quel est le sens de la vie ?"
 - Réveille moi demain à 9h42
 - Et d'autres à venir, pour cela, contribuez !
 

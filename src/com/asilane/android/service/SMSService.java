@@ -21,14 +21,14 @@ public class SMSService implements IService {
 
 	private final Set<String> commands = new HashSet<String>();
 
-	private static final String ENVOI_UN_SMS = "envoi.* un (sms|message)";
-	private static final String SEND_A_SMS = "send a (sms|message)";
+	private static final String ENVOI_UN_SMS = ".*(sms|message)$";
+	private static final String SEND_A_SMS = ".*(sms|message)$";
 
-	private static final String ENVOI_UN_SMS_A = "envoi.* un (sms|message) à.*";
-	private static final String SEND_A_SMS_TO = "send a (sms|message) to.*";
+	private static final String ENVOI_UN_SMS_AU = ".*(sms|message) au (\\d{2} \\d{2} \\d{2} \\d{2} \\d{2})$";
+	private static final String SEND_A_SMS_TO = ".*(sms|message) to (\\d{2} \\d{2} \\d{2} \\d{2} \\d{2})$";
 
-	private static final String ENVOI_UN_SMS_A_EN_DISANT = "envoi.* un (sms|message) à .* en.* disant .*";
-	private static final String SEND_A_SMS_TO_AND_SAY = "send a (sms|message) to .* and say .*";
+	private static final String ENVOI_UN_SMS_AU_EN_DISANT = ".*(sms|message) au (\\d{2} \\d{2} \\d{2} \\d{2} \\d{2}|\\d{2}) .*";
+	private static final String SEND_A_SMS_TO_AND_SAY = ".*(sms|message) to (\\d{2} \\d{2} \\d{2} \\d{2} \\d{2}|\\d{2}) .*";
 
 	/*
 	 * (non-Javadoc)
@@ -41,15 +41,15 @@ public class SMSService implements IService {
 
 		// FRENCH
 		if (lang == Locale.FRANCE) {
-			// With dest and message
-			if ((regexVars = AsilaneUtils.extractRegexVars(ENVOI_UN_SMS_A_EN_DISANT, sentence)) != null) {
-				sms(regexVars.get(2), regexVars.get(4));
+			// With dest
+			if ((regexVars = AsilaneUtils.extractRegexVars(ENVOI_UN_SMS_AU, sentence)) != null) {
+				sms(regexVars.get(2), null);
 				return "Ok, je vous prépare l'envoi d'un sms.";
 			}
 
-			// With dest
-			else if ((regexVars = AsilaneUtils.extractRegexVars(ENVOI_UN_SMS_A, sentence)) != null) {
-				sms(regexVars.get(2), "");
+			// With dest and message
+			if ((regexVars = AsilaneUtils.extractRegexVars(ENVOI_UN_SMS_AU_EN_DISANT, sentence)) != null) {
+				sms(regexVars.get(2), regexVars.get(3));
 				return "Ok, je vous prépare l'envoi d'un sms.";
 			}
 
@@ -60,14 +60,14 @@ public class SMSService implements IService {
 
 		// ENGLISH
 
-		// With dest
 		if ((regexVars = AsilaneUtils.extractRegexVars(SEND_A_SMS_TO, sentence)) != null) {
-			sms(regexVars.get(1), "");
+			sms(regexVars.get(2), null);
 			return "Ok, i send a sms.";
 		}
+
 		// With dest and message
-		else if ((regexVars = AsilaneUtils.extractRegexVars(SEND_A_SMS_TO_AND_SAY, sentence)) != null) {
-			sms(regexVars.get(1), regexVars.get(2));
+		if ((regexVars = AsilaneUtils.extractRegexVars(SEND_A_SMS_TO_AND_SAY, sentence)) != null) {
+			sms(regexVars.get(2), regexVars.get(3));
 			return "Ok, i send a sms.";
 		}
 
@@ -100,8 +100,8 @@ public class SMSService implements IService {
 		if (commands.isEmpty()) {
 			if (lang == Locale.FRANCE) {
 				commands.add(ENVOI_UN_SMS);
-				commands.add(ENVOI_UN_SMS_A);
-				commands.add(ENVOI_UN_SMS_A_EN_DISANT);
+				commands.add(ENVOI_UN_SMS_AU);
+				commands.add(ENVOI_UN_SMS_AU_EN_DISANT);
 			} else {
 				commands.add(SEND_A_SMS);
 				commands.add(SEND_A_SMS_TO);
