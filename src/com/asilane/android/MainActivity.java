@@ -125,8 +125,13 @@ public class MainActivity extends Activity {
 				try {
 					startActivityForResult(intent, RESULT_SPEECH);
 				} catch (final ActivityNotFoundException a) {
-					final Toast t = Toast.makeText(getApplicationContext(),
-							"Opps! Your device doesn't support Speech to Text", Toast.LENGTH_SHORT);
+					String error;
+					if (lang == Locale.FRANCE) {
+						error = "Opps ! Votre appareil ne supporte pas la reconnaissance vocale :(";
+					} else {
+						error = "Opps! Your device doesn't support Speech to Text";
+					}
+					final Toast t = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
 					t.show();
 				}
 			}
