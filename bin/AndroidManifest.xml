@@ -11,7 +11,7 @@
 <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
 <!-- /Permissions -->
 
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="14" />
 
     <application
