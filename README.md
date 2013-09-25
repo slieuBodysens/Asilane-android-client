@@ -13,7 +13,7 @@ Demandez-lui ce que vous voulez, voici quelques exemples :
 
 - Quelle est la météo à Lille ?
 - Envoi un mail à Michael@Vendetta.fr en lui disant qu'il est beau.
-- Enregistre ce que je dis : les chaussettes de l'archiduchesse... (Enregistrement dans le presse-apier)
+- Enregistre ce que je dis : les chaussettes de l'archiduchesse... (Enregistrement dans le presse-papier)
 - Va sur Walane.net / Cherche des informations sur Walane (Recherche DuckDuckGo)
 - Qu'est ce qu'un chien/chat/ordinateur ? (Wikipédia)
 - Montre la vidéo de Bill Gates qui se prend une tarte (YouTube)
