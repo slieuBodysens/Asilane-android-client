@@ -48,6 +48,10 @@ Documentation
 
 La documentation est disponible sur le [dépôt GitHub du coeur d'Asilane](https://github.com/walane/Asilane).
 
+Tutoriel vidéo
+--------------
+Un [tutoriel vidéo](https://www.youtube.com/watch?v=JPaPwXzQZHk) est disponible pour comprendre un peu plus en détails le fonctionnement et l'architecture d'Asilane.
+
 TODO
 ----
 - Interface digne de ce nom
